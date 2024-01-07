@@ -3,8 +3,8 @@ name: Java CI with Gradle
 
 # 워크 플로우가 언제 실행 될지를 정한다.
 on:
-  pull_request:
-    branches: [ "main" ]
+  push:
+    branches:  ["main"]
 
 # 워크플로우에서 할 작업 정의한다.
 jobs:
