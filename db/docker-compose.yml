@@ -1,0 +1,60 @@
+version: '3'
+services:
+  mysql-source:
+    image: mysql:8.0
+    container_name: mysql-source
+    hostname: source
+    ports:
+      - "33006:3306"
+    volumes:
+      - ./source/data:/var/lib/mysql
+      - ./source/log:/var/log/mysql
+      - ./source/conf/my.cnf:/etc/mysql/my.cnf
+    environment:
+      TZ: Asia/Seoul
+      MYSQL_ROOT_USER: "root"
+      MYSQL_ROOT_PASSWORD: "root"
+    networks:
+      - replicaDB
+    restart: always
+
+  mysql-replica1:
+    image: mysql:8.0
+    container_name: mysql-replica1
+    hostname: replica1
+    ports:
+      - "33007:3306"
+    volumes:
+      - ./replica1/data:/var/lib/mysql
+      - ./replica1/log:/var/log/mysql
+      - ./replica1/conf/my.cnf:/etc/mysql/my.cnf
+    environment:
+      TZ: Asia/Seoul
+      MYSQL_ROOT_USER: "root"
+      MYSQL_ROOT_PASSWORD: "root"
+    networks:
+      - replicaDB
+    restart: always
+
+  mysql-replica2:
+    image: mysql:8.0
+    container_name: mysql-replica2
+    hostname: replica2
+    ports:
+      - "33008:3306"
+    volumes:
+      - ./replica2/data:/var/lib/mysql
+      - ./replica2/log:/var/log/mysql
+      - ./replica2/conf/my.cnf:/etc/mysql/my.cnf
+    environment:
+      TZ: Asia/Seoul
+      MYSQL_ROOT_USER: "root"
+      MYSQL_ROOT_PASSWORD: "root"
+    networks:
+      - replicaDB
+    restart: always
+
+networks:
+  replicaDB:
+    driver: bridge
+
